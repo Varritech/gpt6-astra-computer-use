@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varritech - GPT-6 Computer Use</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1200px;
+            height: 1200px;
+            background: #0a0020;
+            font-family: 'Chakra Petch', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Background gradient blobs */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+        }
+        
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            top: -200px;
+            right: -200px;
+        }
+        
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            bottom: -150px;
+            left: -150px;
+        }
+        
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* Scanlines overlay */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Vignette */
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(10, 0, 32, 0.8) 100%);
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        /* Bauhaus shapes */
+        .bauhaus-shape {
+            position: absolute;
+            opacity: 0.12;
+        }
+        
+        .shape-1 {
+            width: 120px;
+            height: 120px;
+            border: 8px solid #d4fc79;
+            border-radius: 50%;
+            top: 100px;
+            left: 80px;
+        }
+        
+        .shape-2 {
+            width: 0;
+            height: 0;
+            border-left: 80px solid transparent;
+            border-right: 80px solid transparent;
+            border-bottom: 140px solid #96e6a1;
+            top: 300px;
+            right: 100px;
+            transform: rotate(15deg);
+        }
+        
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            bottom: 200px;
+            left: 150px;
+            transform: rotate(45deg);
+        }
+        
+        .shape-4 {
+            width: 150px;
+            height: 150px;
+            border: 6px solid #4facfe;
+            bottom: 100px;
+            right: 150px;
+            border-radius: 30px;
+        }
+        
+        .shape-5 {
+            width: 80px;
+            height: 80px;
+            background: #00f2fe;
+            top: 500px;
+            right: 300px;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        /* Main content */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 80px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        /* Hook section */
+        .hook-section {
+            margin-top: 60px;
+        }
+        
+        .hook-strikethrough {
+            font-size: 48px;
+            color: #6b7280;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 4px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .hook-pivot {
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+        
+        /* Stat pills */
+        .stat-pills {
+            display: flex;
+            gap: 24px;
+            margin: 50px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px 32px;
+            min-width: 200px;
+        }
+        
+        .stat-value {
+            font-size: 42px;
+            font-weight: 700;
+            color: #d4fc79;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #9ca3af;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        
+        /* Glassmorphism diff card */
+        .diff-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .diff-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+        
+        .diff-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            font-size: 20px;
+            color: #e5e7eb;
+        }
+        
+        .diff-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .diff-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        
+        .diff-icon.check {
+            background: #10b981;
+            color: white;
+        }
+        
+        .diff-icon.cross {
+            background: #ef4444;
+            color: white;
+        }
+        
+        /* CTA section */
+        .cta-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            color: #0a0020;
+            font-size: 32px;
+            font-weight: 700;
+            padding: 28px 64px;
+            border-radius: 16px;
+            text-decoration: none;
+            box-shadow: 0 10px 40px rgba(212, 252, 121, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .repo-url {
+            font-size: 20px;
+            color: #9ca3af;
+            font-family: monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        /* Tagline */
+        .tagline {
+            text-align: center;
+            font-size: 24px;
+            color: #6b7280;
+            font-style: italic;
+            margin-top: 30px;
+        }
+        
+        /* Logo */
+        .logo-container {
+            position: absolute;
+            top: 60px;
+            right: 80px;
+            z-index: 20;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            background-image: url('varritech-logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: invert(1) brightness(2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Background blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    
+    <!-- Overlays -->
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    
+    <!-- Bauhaus shapes -->
+    <div class="bauhaus-shape shape-1"></div>
+    <div class="bauhaus-shape shape-2"></div>
+    <div class="bauhaus-shape shape-3"></div>
+    <div class="bauhaus-shape shape-4"></div>
+    <div class="bauhaus-shape shape-5"></div>
+    
+    <!-- Logo -->
+    <div class="logo-container">
+        <div class="logo"></div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="content">
+        <div class="hook-section">
+            <div class="hook-strikethrough">Another AI model release</div>
+            <div class="hook-pivot">This one controls your entire computer</div>
+        </div>
+        
+        <div class="stat-pills">
+            <div class="stat-pill">
+                <div class="stat-value">99.9%</div>
+                <div class="stat-label">ARC-AGI-3 Score</div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-value">100K+</div>
+                <div class="stat-label">GPU Training Cluster</div>
+            </div>
+            <div class="stat-pill">
+                <div class="stat-value">20ms</div>
+                <div class="stat-label">Action Latency</div>
+            </div>
+        </div>
+        
+        <div class="diff-card">
+            <div class="diff-title">What GPT-6 Astra Actually Does:</div>
+            <div class="diff-item">
+                <div class="diff-icon check">✓</div>
+                <div>Takes screenshots of your desktop</div>
+            </div>
+            <div class="diff-item">
+                <div class="diff-icon check">✓</div>
+                <div>Analyzes UI with vision models</div>
+            </div>
+            <div class="diff-item">
+                <div class="diff-icon check">✓</div>
+                <div>Clicks, types, scrolls like a human</div>
+            </div>
+            <div class="diff-item">
+                <div class="diff-icon check">✓</div>
+                <div>Learns from success/failure (RLVR)</div>
+            </div>
+            <div class="diff-item">
+                <div class="diff-icon cross">✗</div>
+                <div style="color: #9ca3af;">Doesn't need looped transformers (you can build this today)</div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <div class="cta-button">FORK THE REPO</div>
+            <div class="repo-url">github.com/Varritech/gpt6-astra-computer-use</div>
+            <div class="tagline">Bold ideas wait for no one</div>
+        </div>
+    </div>
+</body>
+</html>
