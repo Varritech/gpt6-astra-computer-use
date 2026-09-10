@@ -1,0 +1,9 @@
+pyautogui>=0.9.54
+Pillow>=10.0.0
+mss>=9.0.0
+numpy>=1.24.0
+openai>=1.40.0
+python-dotenv>=1.0.0
+tenacity>=8.2.0
+click>=8.1.0
+rich>=13.0.0
